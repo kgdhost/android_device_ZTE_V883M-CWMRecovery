@@ -1,0 +1,58 @@
+USE_CAMERA_STUB := true
+
+# inherit from the proprietary version
+-include vendor/ZTE/V883M/BoardConfigVendor.mk
+
+TARGET_ARCH := arm
+TARGET_NO_BOOTLOADER := true
+TARGET_BOARD_PLATFORM := mt6589
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_ARCH_VARIANT := armv7-a-neon
+ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_BOOTLOADER_BOARD_NAME := V883M
+TARGET_OTA_ASSERT_DEVICE := V883M 
+
+BOARD_KERNEL_CMDLINE := 
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_PAGESIZE := 2048
+
+TARGET_PREBUILT_KERNEL := device/ZTE/V883M/kernel
+
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# Make image boot
+BOARD_CUSTOM_BOOTIMG_MK := device/ZTE/V883M/custombootimg.mk
+
+# Set insecure for root access and device specifics
+ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0 \
+ro.allow.mock.location=0 \
+persist.mtk.aee.aed=on \
+ro.debuggable=1 \
+persist.service.acm.enable=0 \
+persist.sys.usb.config=mass_storage \
+ro.mount.fs=EXT4
+
+# Partition sizes
+BOARD_BOOTIMAGE_PARTITION_SIZE := 6291456
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 6291456
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 681574400
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 1073741824
+BOARD_FLASH_BLOCK_SIZE := 131072
+TARGET_USERIMAGES_USE_EXT4 := true
+#BOARD_HAS_LARGE_FILESYSTEM := true
+
+# Recovery
+TARGET_RECOVERY_INITRC := device/ZTE/V883M/recovery/init.rc
+TARGET_RECOVERY_FSTAB := device/ZTE/V883M/recovery/recovery.fstab
+CWM_EMMC_BOOT_DEVICE_NAME := /dev/bootimg
+CWM_EMMC_BOOT_DEVICE_SIZE := 0x00600000
+CWM_EMMC_RECOVERY_DEVICE_NAME := /dev/recovery
+CWM_EMMC_RECOVERY_DEVICE_SIZE := 0x00600000
+CWM_EMMC_UBOOT_DEVICE_NAME := /dev/uboot
+CWM_EMMC_UBOOT_DEVICE_SIZE := 0x00060000
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
+DEVICE_RESOLUTION := 480x854
+TARGET_SCREEN_WIDTH := 480
+TARGET_SCREEN_HEIGHT := 854
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/gadget/lun%d/file
